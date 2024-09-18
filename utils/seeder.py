@@ -26,7 +26,7 @@ def seedUsers(user_repo: user_repo.UserRepo):
             created_at=time_now,
             username=Env.INITIAL_USER_USERNAME,
             password=bcrypt_utils.hashPassword(Env.INITIAL_USER_PASSWORD),
-            fullname=Env.INITIAL_USER_USERNAME.replace("_", " ").capitalize,
+            fullname=Env.INITIAL_USER_USERNAME.replace("_", " ").capitalize(),
             email=f"{Env.INITIAL_USER_USERNAME}@example.com",
         )
     ]

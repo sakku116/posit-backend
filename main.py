@@ -1,10 +1,11 @@
-from dotenv import find_dotenv, load_dotenv
+from dotenv import find_dotenv, load_dotenv, dotenv_values
 
 load_dotenv(find_dotenv(), override=True)
 
 import logging
 from contextlib import asynccontextmanager
 from datetime import datetime
+from dataclasses import asdict
 
 import requests
 import uvicorn
@@ -86,6 +87,18 @@ app.add_middleware(
 )
 
 if __name__ == "__main__":
+    # checking unused env ferm .env file
+    dotenv_values = dotenv_values(".env")
+    required_envs = asdict(Env())
+    for key, value in dotenv_values.items():
+        if key not in required_envs:
+            logging.warning(f"{key} is not defined in required Envs")
+
+    # checking missing env
+    for key in required_envs:
+        if key not in dotenv_values:
+            logging.warning(f"{key} is missing from .env file")
+
     mongodb = getMongoDB()
     mongodb_utils.ensureIndexes(db=mongodb)
     seeder_utils.seedUsers(user_repo.UserRepo(mongodb))

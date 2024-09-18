@@ -11,9 +11,12 @@ class Env:
     RELOAD: bool = parseBool(os.getenv("RELOAD", "false"))
     TZ: str = os.getenv("TZ", "Asia/Jakarta")
 
-    JWT_EXP: int = int(os.getenv("JWT_EXP", 9)) # hours
-    JWT_SECRET: str = os.getenv("JWT_SECRET", "secret")
+    TOKEN_EXP_HOURS: str = os.getenv("TOKEN_EXP_HOURS", "secret")
+    REFRESH_TOKEN_EXP_HOURS: int = int(os.getenv("REFRESH_TOKEN_EXP", 24))
     AES_SECRET: str = os.getenv("AES_SECRET", "secret")
     INTERNAL_TOKEN: str = os.getenv("INTERNAL_TOKEN", "")
     INITIAL_USER_USERNAME: str = os.getenv("INITIAL_USER_USERNAME", None)
     INITIAL_USER_PASSWORD: str = os.getenv("INITIAL_USER_PASSWORD", None)
+
+    MONGODB_URI: str = os.getenv("MONGODB_URI", "mongodb://localhost:27017")
+    MONGODB_NAME: str = os.getenv("MONGODB_NAME", "posit_db")
