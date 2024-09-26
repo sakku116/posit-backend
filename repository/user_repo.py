@@ -1,15 +1,13 @@
 import logging
+from typing import Literal, Union
 
 from fastapi import Depends
-from pymongo import database, ReturnDocument
+from pymongo import ReturnDocument, database
 
 from config.mongodb import getMongoDB
+from core.logging import logger
 from domain.dto import user_dto
-from typing import Union
 from domain.model import user_model
-from typing import Literal
-
-logger = logging.getLogger(__name__)
 
 
 class UserRepo:
@@ -37,7 +35,9 @@ class UserRepo:
         res = self.users_coll.find_one_and_delete({"id": id})
         return user_model.UserModel(**res) if res else None
 
-    def get(self, id: str = None, username: str = None) -> Union[user_model.UserModel, None]:
+    def get(
+        self, id: str = None, username: str = None
+    ) -> Union[user_model.UserModel, None]:
         if not id and not username:
             raise ValueError("id or username must be provided")
 

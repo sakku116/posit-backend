@@ -2,11 +2,10 @@ from fastapi import Depends
 from pymongo import ReturnDocument
 from pymongo.database import Database
 from domain.model import session_model
+from core.logging import logger
 
 from config.mongodb import getMongoDB
 import logging
-
-logger = logging.getLogger(__name__)
 
 class SessionRepo:
     def __init__(self, mongodb: Database = Depends(getMongoDB)):

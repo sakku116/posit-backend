@@ -19,7 +19,7 @@ from config.env import Env
 from config.mongodb import getMongoDB
 from core.exceptions import handlers as exception_handlers
 from core.exceptions.http import CustomHttpException
-from core.logging import PackagePathFilter
+from core.logging import setupLogger, logger
 from repository import user_repo
 from utils import mongodb as mongodb_utils
 from utils import seeder as seeder_utils
@@ -32,11 +32,12 @@ logging.Formatter.converter = lambda *args: datetime.now(
 ).timetuple()
 logging.basicConfig(
     level=logging.DEBUG if Env.DEBUG else logging.INFO,
-    format="%(asctime)s %(levelname)s: \033[92m%(message)s  ...[%(pathname)s@%(funcName)s():%(lineno)d]\033[0m",
+    format="%(asctime)s %(levelname)s: 92m%(message)s",
     datefmt="%d-%m-%Y %H:%M:%S",
 )
-for logger in logging.root.handlers:
-    logger.addFilter(PackagePathFilter())
+
+# setup custom logger
+setupLogger()
 
 # default uvicorn logging format
 LOGGING_CONFIG["formatters"]["default"][
@@ -92,12 +93,12 @@ if __name__ == "__main__":
     required_envs = asdict(Env())
     for key, value in dotenv_values.items():
         if key not in required_envs:
-            logging.warning(f"{key} is not defined in required Envs")
+            logger.warning(f"{key} is not defined in required Envs")
 
     # checking missing env
     for key in required_envs:
         if key not in dotenv_values:
-            logging.warning(f"{key} is missing from .env file")
+            logger.warning(f"{key} is missing from .env file")
 
     mongodb = getMongoDB()
     mongodb_utils.ensureIndexes(db=mongodb)

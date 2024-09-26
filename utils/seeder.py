@@ -1,11 +1,9 @@
+from config.env import Env
+from core.logging import logger
 from domain.model.user_model import UserModel
 from repository import user_repo
 from utils import bcrypt as bcrypt_utils
-from config.env import Env
-import logging
 from utils import helper
-
-logger = logging.getLogger(__name__)
 
 
 def seedUsers(user_repo: user_repo.UserRepo):
