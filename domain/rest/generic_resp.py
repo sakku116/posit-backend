@@ -34,6 +34,7 @@ def generatePaginationNumberList(
 
 
 class BaseResp(BaseModel):
+    code: int = 200
     error: bool = False
     message: str = "OK"
     error_detail: Union[str, list, dict, None] = None
