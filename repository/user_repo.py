@@ -18,14 +18,14 @@ class UserRepo:
         self.users_coll = mongodb[user_model.UserModel()._coll_name]
 
     def create(self, data: user_model.UserModel):
-        return self.users_coll.insert_one(data.model_dump())
+        self.users_coll.insert_one(data.model_dump())
 
     def update(
         self, id: str, data: user_model.UserModel
     ) -> Union[user_model.UserModel, None]:
         res = self.users_coll.find_one_and_update(
             {"id": id},
-            {"$set": data.model_dump()},
+            {"$set": data.model_dump(exclude=["id", "created_at"])},
             return_document=ReturnDocument.AFTER,
         )
 
@@ -100,6 +100,7 @@ class UserRepo:
                 for item in cursor[0].get("paginated_results", [])
             ]
             count = cursor[0].get("total", 0)
+            return data, count
         except Exception as e:
             logger.warning(e)
             return [], 0
