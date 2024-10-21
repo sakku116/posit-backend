@@ -45,7 +45,7 @@ class AuthService:
 
         # check password
         is_pw_match = bcrypt_utils.checkPassword(password, user.password)
-        if user.password != password:
+        if is_pw_match:
             exc = CustomHttpException(
                 status_code=401,
                 message="Invalid password",
