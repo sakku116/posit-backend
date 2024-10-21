@@ -9,5 +9,5 @@ import logging
 
 class SessionRepo:
     def __init__(self, mongodb: Database = Depends(getMongoDB)):
-        self.session_coll = mongodb[session_model.SessionModel._coll_name]
-        self.refresh_token_coll = mongodb[session_model.RefreshTokenModel._coll_name]
+        self.session_coll = mongodb[session_model.SessionModel()._coll_name]
+        self.refresh_token_coll = mongodb[session_model.RefreshTokenModel()._coll_name]
