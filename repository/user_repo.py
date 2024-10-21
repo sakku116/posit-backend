@@ -1,5 +1,5 @@
 import logging
-from typing import Literal, Union
+from typing import Literal, Union, Optional
 
 from fastapi import Depends
 from pymongo import ReturnDocument, database
@@ -36,7 +36,7 @@ class UserRepo:
         return user_model.UserModel(**res) if res else None
 
     def get(
-        self, id: str = None, username: str = None
+        self, id: Optional[str] = None, username: Optional[str] = None
     ) -> Union[user_model.UserModel, None]:
         if not id and not username:
             raise ValueError("id or username must be provided")

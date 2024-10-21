@@ -8,7 +8,6 @@ class SessionModel(MyBaseModel):
     session_token: str = ""
     jwt_token: str = ""
     expired_at: int = 0
-    user_id: str = 0  # same as created_by
 
 class RefreshTokenModel(MyBaseModel):
     _coll_name: str = "refresh_tokens"

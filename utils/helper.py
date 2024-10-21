@@ -14,7 +14,7 @@ def generateSkip(page: int, limit: int) -> int:
     return (page - 1) * limit
 
 
-def timeNow() -> int:
+def timeNowEpoch() -> int:
     return Int64(time.time())
 
 

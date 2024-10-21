@@ -17,7 +17,7 @@ def seedUsers(user_repo: user_repo.UserRepo):
     if not Env.INITIAL_USER_USERNAME.islower() or " " in Env.INITIAL_USER_USERNAME:
         raise Exception("Env.INITIAL_USER_USERNAME is not lowercase")
 
-    time_now = helper.timeNow()
+    time_now = helper.timeNowEpoch()
     user_list = [
         UserModel(
             id=helper.generateUUID(),
