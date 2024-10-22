@@ -31,6 +31,17 @@ class UserRepo:
 
         return user_model.UserModel(**res) if res else None
 
+    def patch(
+        self, id: str, data: user_model.UserModel
+    ) -> Union[user_model.UserModel, None]:
+        res = self.users_coll.find_one_and_update(
+            {"id": id},
+            {"$set": data.model_dump(exclude=["id", "created_at"], exclude_unset=True)},
+            return_document=ReturnDocument.AFTER,
+        )
+
+        return user_model.UserModel(**res) if res else None
+
     def delete(self, id: str) -> Union[user_model.UserModel, None]:
         res = self.users_coll.find_one_and_delete({"id": id})
         return user_model.UserModel(**res) if res else None

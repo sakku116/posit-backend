@@ -5,7 +5,6 @@ class SessionModel(MyBaseModel):
     _coll_name = "sessions"
     _custom_int64_fields = ["expired_at"]
 
-    session_token: str = ""
     jwt_token: str = ""
     expired_at: int = 0
 
